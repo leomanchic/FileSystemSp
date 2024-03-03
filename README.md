@@ -25,5 +25,6 @@
 ---
 ### Ресурсы 
 [Что такое flat-file](https://appmaster.io/ru/blog/chto-takoe-ploskii-fail)\
+[Flat file model wiki](https://en.wikipedia.org/wiki/Flat-file_database)\
 [Учебная практика](https://www.козьяков.мир.рус/%D0%B4%D0%B8%D1%81%D1%86%D0%B8%D0%BF%D0%BB%D0%B8%D0%BD%D1%8B/%D1%83%D1%87%D0%B5%D0%B1%D0%BD%D0%B0%D1%8F-%D0%BF%D1%80%D0%B0%D0%BA%D1%82%D0%B8%D0%BA%D0%B0)\
 [REST в джава](https://javarush.com/groups/posts/2486-obzor-rest-chastjh-1-chto-takoe-rest)
