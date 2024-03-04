@@ -66,8 +66,18 @@ public class FileServiceImpl implements FileService{
     @Override
     public List<File> readAll() throws IOException {
         table = loadTable();
+        ListOfFiles.clear();
         for (String rowData : table) {
             System.out.println(rowData);
+            String[] dataArray = rowData.split("\\s+");
+            File file = new File();
+            file.setId(UUID.fromString(dataArray[0].trim()));
+            file.setName(dataArray[1].trim());
+            file.setTime_c(LocalDateTime.parse(dataArray[2].trim()));
+            file.setTime_e(LocalDateTime.parse(dataArray[3].trim()));
+            file.setFile_type(dataArray[4].trim());
+            file.setBuffer_size(Integer.parseInt(dataArray[5].trim()));
+            ListOfFiles.add(file);
         }
         return ListOfFiles;
     }

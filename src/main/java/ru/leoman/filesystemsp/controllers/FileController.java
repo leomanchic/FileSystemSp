@@ -28,7 +28,7 @@ public class FileController {
         return service.read(uuid);
     }
     @PostMapping("/files")
-    public ResponseEntity<File> createDevice(@RequestBody File file) throws IOException {
+    public ResponseEntity<File> createFile(@RequestBody File file) throws IOException {
         service.create(file);
         return new ResponseEntity<>(file, HttpStatus.CREATED);
     }
