@@ -32,11 +32,11 @@
 
 ### Тестирование с Postman
 1. Получение файла по uuid
-![img.png](img.png)\
+![img.png](assets/img.png)\
 тело запроса ```
 http://localhost:8080/api/files/2944f342-3998-4277-88f2-02c94ceacce0``` 
 
-![img_1.png](img_1.png)
+![img_1.png](assets/img_1.png)
 2. Получение всех файлов файловой системы\
    тело запроса ```get
    http://localhost:8080/api/files```
