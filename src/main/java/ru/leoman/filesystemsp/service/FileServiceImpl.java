@@ -49,6 +49,7 @@ public class FileServiceImpl implements FileService{
                 obj = s;
             }
         }
+
         String[] dataArray = obj.split("\\s+");
         for (String data : dataArray) {
             System.out.println(dataArray[2].trim());

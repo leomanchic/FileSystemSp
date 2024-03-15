@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
 import ru.leoman.filesystemsp.File;
 import ru.leoman.filesystemsp.service.FileServiceImpl;
 
@@ -13,6 +14,7 @@ import java.util.UUID;
 
 @RestController
 @RequestMapping("/api")
+@ResponseStatus(value = HttpStatus.NOT_FOUND)
 public class FileController {
     private final FileServiceImpl service;
     @Autowired
@@ -25,7 +27,14 @@ public class FileController {
     }
     @GetMapping("files/{uuid}")
     public File  getFile(@PathVariable UUID uuid) throws IOException {
-        return service.read(uuid);
+        try {
+            File file = service.read(uuid);
+            return file;
+        }
+        catch (ExceptionInInitializerError exc){
+
+            throw new ResponseStatusException(HttpStatus.NOT_FOUND, "File not found", exc);
+        }
     }
     @PostMapping("/files")
     public ResponseEntity<File> createFile(@RequestBody File file) throws IOException {
