@@ -195,7 +195,7 @@ public class FileServiceImpl implements FileService{
 //                .sum()/y.stream()
 //                .mapToDouble(i -> Math.pow(i - y_,2))
 //                .sum();
-        return 1;
+        return r_square;
     }
 
     public  static String formatRow(String field1, String field2, String field3, String field4, String field5, String field6) {
