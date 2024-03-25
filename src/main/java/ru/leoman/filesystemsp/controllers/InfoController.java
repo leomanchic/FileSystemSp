@@ -26,6 +26,7 @@ public class InfoController {
         info.put("author", "lemanchic");
         info.put("year","2024");
         info.put("filesInSystem", String.valueOf(fileService.readAll().size()));
+        info.put("Determination of regression", String.valueOf(fileService.Statistics()));
         return ResponseEntity.ok(info);
     }
 }

@@ -6,9 +6,12 @@ import ru.leoman.filesystemsp.File;
 
 import java.io.*;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
+
+import static java.lang.Double.parseDouble;
 
 @Service
 public class FileServiceImpl implements FileService{
@@ -112,6 +115,88 @@ public class FileServiceImpl implements FileService{
             }
         }
     }
+    @Override
+    public  double Statistics() throws IOException {
+        table = loadTable();
+        ArrayList<Double> y = new ArrayList<Double>();
+        ArrayList<Double> x = new ArrayList<Double>();
+        for (String rowData : table) {
+            System.out.println(rowData);
+            String[] dataArray = rowData.split("\\s+");
+            System.out.println((double) LocalDateTime.parse(dataArray[2].trim()).toInstant(ZoneOffset.UTC).toEpochMilli()*0.0000000001);
+            y.add((double) LocalDateTime.parse(dataArray[2].trim()).toEpochSecond(ZoneOffset.UTC)*0.000000001);
+            x.add(parseDouble(dataArray[5].trim()));
+        }
+        System.out.println(y);
+        long n = x.size();
+        double sumYXN = 0;
+        for (int i = 0; i < n; i++) {
+            sumYXN += x.get(i)*Math.abs(Math.log(y.get(i)));
+        }
+        System.out.println(y);
+        double sumYX = 0;
+        for (int i = 0; i < n; i++) {
+            sumYX += Math.log(y.get(i));
+        }
+        sumYX = y.stream()
+                .mapToDouble(Math::log)
+                .sum()* x.stream()
+                .mapToDouble(a -> a)
+                .sum();
+        System.out.println(y);
+//        double sumxx =  n*(x.stream()
+//                .mapToDouble(i -> i*i)
+//                .sum()) - Math.pow(x.stream()
+//                .mapToDouble(i -> i)
+//                .sum(),2);
+        double sumxx = 0;
+        for (double i: x){
+            sumxx+=i*i;
+        }
+        sumxx*=(double)n;
+        double sex = 0;
+        for (double i: x){
+            sex+=i;
+        }
+        sumxx= sumxx-sex*sex;
+        System.out.println(sumxx);
+        System.out.println(sex*sex);
+        System.out.println(sumYX);
+        double a = (n*sumYXN - sumYX)/sumxx;
+        double b =  ((double)1/n)*(y.stream()
+                .mapToDouble(i -> i)
+                .sum() - a*x.stream()
+                .mapToDouble(i -> i)
+                .sum());
+        System.out.println(y);
+        ArrayList<Double> s4 =new ArrayList<Double>();
+        System.out.println(x);
+        System.out.println(a);
+        System.out.println(b);
+        for (Double i: x) {
+            s4.add(a+b*i);
+        }
+
+        double y_ = y.stream()
+                .mapToDouble(i -> i)
+                .sum()/n;
+        double r_square = (s4.stream()
+                .mapToDouble(i -> (i - y_)*(i - y_))
+                .sum())/(y.stream()
+                .mapToDouble(i -> (i - y_)*(i - y_))
+                .sum());
+         System.out.println(r_square);
+//        System.out.println(y_);
+//        System.out.println(y);
+//        System.out.println(s4);
+//        System.out.println(x);
+//        double r_square = s4.stream()
+//                .mapToDouble(i -> Math.pow(i - y_,2))
+//                .sum()/y.stream()
+//                .mapToDouble(i -> Math.pow(i - y_,2))
+//                .sum();
+        return 1;
+    }
 
     public  static String formatRow(String field1, String field2, String field3, String field4, String field5, String field6) {
         return String.format("%-40s%-40s%-40s%-40s%-40s%-40s", field1, field2, field3, field4, field5, field6);
@@ -140,26 +225,4 @@ public class FileServiceImpl implements FileService{
 
 }
 
-//private static final List<File> ListOfFiles =  new ArrayList<>();
-//FileList(File file) {
-//    this.ListOfFiles.add(file);
-//};
-//public void displayOf(){
-//    System.out.println(ListOfFiles);
-//}
-//public File  read(UUID uuid) {
-//    return FileList.ListOfFiles.stream().filter(file -> file.getId().equals(uuid)).findFirst().orElseThrow();
-//}
-//
-//public void add(File file){
-//    this.ListOfFiles.add(file);
-//}
-//
-//public List<File> readAll(){
-//    return ListOfFiles;
-//}
-//
-//public void delete(UUID uuid){
-//    File file = read(uuid);
-//    FileList.ListOfFiles.remove(file);
-//}
+

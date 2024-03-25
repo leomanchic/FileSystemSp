@@ -12,4 +12,5 @@ public interface FileService {
     File read(UUID uuid) throws IOException;
     List<File> readAll() throws IOException;
     void delete(UUID uuid) throws IOException;
+    double Statistics() throws  IOException;
 }
