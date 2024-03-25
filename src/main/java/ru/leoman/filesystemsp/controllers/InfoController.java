@@ -4,6 +4,7 @@ package ru.leoman.filesystemsp.controllers;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.RequestHeader;
 import org.springframework.web.bind.annotation.RestController;
 import ru.leoman.filesystemsp.service.FileService;
 
@@ -19,7 +20,7 @@ public class InfoController {
         this.fileService = fileService;
     }
     @GetMapping("/info")
-    public ResponseEntity<Map<String, String>> info() throws IOException {
+    public ResponseEntity<Map<String, String>> info(@RequestHeader("Statistics") String reg) throws IOException {
         Map<String,String>  info = new HashMap<>();
         info.put("name", "FileSystem");
         info.put("version", "1.0.0");
