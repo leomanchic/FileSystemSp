@@ -20,14 +20,16 @@ public class InfoController {
         this.fileService = fileService;
     }
     @GetMapping("/info")
-    public ResponseEntity<Map<String, String>> info(@RequestHeader("Statistics") String reg) throws IOException {
+    public ResponseEntity<Map<String, String>> info(@RequestHeader(value = "Statistics", required = false)  String stat) throws IOException {
         Map<String,String>  info = new HashMap<>();
         info.put("name", "FileSystem");
         info.put("version", "1.0.0");
         info.put("author", "lemanchic");
         info.put("year","2024");
-        info.put("filesInSystem", String.valueOf(fileService.readAll().size()));
-        info.put("Determination of regression", String.valueOf(fileService.Statistics()));
+        if (stat != null) {
+            info.put("filesInSystem", String.valueOf(fileService.readAll().size()));
+            info.put("Determination of regression", String.valueOf(fileService.Statistics()));
+        }
         return ResponseEntity.ok(info);
     }
 }
