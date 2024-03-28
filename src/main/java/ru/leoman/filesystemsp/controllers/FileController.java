@@ -22,14 +22,14 @@ public class FileController {
         this.service = service;
     }
     @GetMapping("/files")
-    public List<File> getFiles() throws IOException {
-        return service.readAll();
+    public ResponseEntity<List<File>> getFiles() throws IOException {
+        return ResponseEntity.ok(service.readAll());
     }
     @GetMapping("files/{uuid}")
-    public File  getFile(@PathVariable UUID uuid) throws IOException {
+    public ResponseEntity<File>  getFile(@PathVariable UUID uuid) throws IOException {
         try {
             File file = service.read(uuid);
-            return file;
+            return ResponseEntity.ok(file);
         }
         catch (ExceptionInInitializerError exc){
 
